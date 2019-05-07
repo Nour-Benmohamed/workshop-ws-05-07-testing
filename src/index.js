@@ -21,32 +21,32 @@ class App extends Component {
     this.search('pixar');
   }
 
-    search = (text) => {
-      youtubeSearch(text).then((videos) => {
-        this.setState({
-          videos,
-          selectedVideo: videos[0],
-        });
+  search = (text) => {
+    youtubeSearch(text).then((videos) => {
+      this.setState({
+        videos: videos.all,
+        selectedVideo: videos.all[0],
       });
-    };
+    });
+  };
 
-    render() {
-      return (
-        <div>
-          <div className="search-bar-container">
-            <SearchBar id="search-bar" onSearchChange={this.search} />
+  render() {
+    return (
+      <div>
+        <div className="search-bar-container">
+          <SearchBar id="search-bar" onSearchChange={this.search} />
+        </div>
+        <div id="video-section-container">
+          <div id="video-section">
+            <VideoDetail video={this.state.selectedVideo} />
           </div>
-          <div id="video-section-container">
-            <div id="video-section">
-              <VideoDetail video={this.state.selectedVideo} />
-            </div>
-            <div className="video-bar" id="video-section">
-              <VideoList onVideoSelect={selectedVideo => this.setState({ selectedVideo })} videos={this.state.videos} />
-            </div>
+          <div className="video-bar" id="video-section">
+            <VideoList onVideoSelect={selectedVideo => this.setState({ selectedVideo })} videos={this.state.videos} />
           </div>
         </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('main'));
